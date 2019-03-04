@@ -1,6 +1,14 @@
 let restaurant;
 var newMap;
 
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js')
+    .then((reg) => console.log('Service Worker registration successful with scope: ', reg.scope))
+    .catch((err) => console.log('Service Worker registration failed: ', err))
+  });
+}
+
 /**
  * Initialize map as soon as the page is loaded.
  */
@@ -127,8 +135,9 @@ fillRestaurantHoursHTML = (operatingHours = self.restaurant.operating_hours) => 
  */
 fillReviewsHTML = (reviews = self.restaurant.reviews) => {
   const container = document.getElementById('reviews-container');
-  const title = document.createElement('h2');
+  const title = document.createElement('h3');
   title.innerHTML = 'Reviews';
+  title.setAttribute("tabindex", "0");
   container.appendChild(title);
 
   if (!reviews) {
@@ -156,19 +165,23 @@ createReviewHTML = (review) => {
 
   const name = document.createElement('p');
   name.innerHTML = review.name;
+  name.setAttribute("tabindex", "0");
   nameContainer.appendChild(name);
 
   const date = document.createElement('p');
   date.innerHTML = review.date;
+  date.setAttribute("tabindex", "0");
   nameContainer.appendChild(date);
 
   const rating = document.createElement('p');
   rating.innerHTML = `Rating: ${review.rating}`;
   rating.className = 'rating';
+  rating.setAttribute("tabindex", "0");
   li.appendChild(rating);
 
   const comments = document.createElement('p');
   comments.innerHTML = review.comments;
+  comments.setAttribute("tabindex", "0");
   li.appendChild(comments);
 
   return li;

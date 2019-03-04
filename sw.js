@@ -1,4 +1,4 @@
-const CACHE_NAME = 'reviews-cache-v4';
+const CACHE_NAME = 'reviews-cache-v6';
 const urlsToCache = [
     '/',
     'css/styles.css',
